@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<title>nowjs test</title>
+	<!--<script type="text/javascript" src="http://localhost/testnow/jquery-1.7.2.min.js"></script>-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="/nowjs/now.js"></script>
+	<script type="text/javascript">
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//============================
+	//CLIENT JS
+	//============================
+		var context;		
+		var startX = Math.round(Math.random()*(500-5)),
+			startY = Math.round(Math.random()*(500-5));
+			
+		if(startX %5 != 0) {
+			startX += 5 - (startX % 5);
+		}
+		
+		if(startY %5 != 0) {
+			startY += 5 - (startY % 5);
+		}
+		
+		var props = {
+			x: startX,
+			y: startY,
+		}
+
+		$(document).ready(function() {
+			context = $('#canvasBox')[0].getContext('2d');
+			$('#canvasBox').keydown(function(e) {
+				e.preventDefault();
+				switch(e.which) {
+					//left
+					case 37:
+						if(Math.abs(props.x > 0)){
+							props.x -= 5;
+							now.updatePlayer(props.x, props.y);
+						}
+						//console.log(props.x);
+						break;
+					//right
+					case 39:
+						if(Math.abs(props.x < 495)){
+							props.x += 5;
+							now.updatePlayer(props.x, props.y);
+						}
+						console.log(props.x);
+						break;
+					//up
+					case 38:
+						if(Math.abs(props.y > 0)){
+							props.y -= 5;
+							now.updatePlayer(props.x, props.y);
+						}
+						console.log(props.y);
+						break;
+					//down
+					case 40:
+						if(Math.abs(props.y < 495)){
+							props.y += 5;
+							now.updatePlayer(props.x, props.y);
+						}
+						console.log(props.y);
+						break;  
+				}
+		  });
+		  
+		  
+		  now.ready(function() {
+			now.updatePlayer(props.x, props.y);
+		  });
+		  
+		});
+
+		now.drawPlayers = function(players, fruits) {
+			//console.log(fruits.x);
+		  context.clearRect(0, 0, 500, 500);
+		  context.beginPath();
+		  
+		  context.fillStyle = 'green';
+		  context.fillRect(fruits.x, fruits.y, 5, 5);
+
+		  for(var i in players) {
+			//console.log(now);
+			if(i == now.core.clientId) {
+			  context.fillStyle = 'red';
+			  context.fillRect(players[i].x, players[i].y, 5, 5); 
+			} else {
+			  context.fillStyle = 'black';
+			  context.fillRect(players[i].x, players[i].y, 5, 5);
+			}
+			//window.requestAnimFrame(animate);
+		  }
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</script>
+	</head>
+
+	<body>
+		<canvas id="canvasBox" width="500" height="500" tabindex="1" style="border:1px solid #000"></canvas>
+	</body>
+</html>
